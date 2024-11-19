@@ -6,6 +6,21 @@ from .models import Student
 from .serializers import StudentSerializer
 from .permissions import IsAdminOrReadOnly, IsStudentOrAdmin
 
+import logging
+from django.http import HttpResponse
+
+
+logger = logging.getLogger('my_project')
+
+def student_view(request):
+    try:
+       
+        logger.info("Successfully accessed the students page.")
+        return HttpResponse("Success")
+    except Exception as e:
+        
+        logger.error("An error occurred while accessing students: %s", e)
+        return HttpResponse("Error", status=500)
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
